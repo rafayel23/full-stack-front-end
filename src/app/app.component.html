@@ -1,5 +1,12 @@
-<button (click)="getUsers()">Get users</button>
-<br>
-<button (click)="addUser()">Add user</button>
-<input type="text" [(ngModel)]="name">
-<input type="text" [(ngModel)]="age">
+<div class="h-100 d-flex justify-content-center align-items-center">
+  <div class="jumbotron px-5">
+    <button class="btn btn-success w-100" (click)="getUsers()">Get users</button>
+    <form (ngSubmit)="addUser()" [formGroup]="signupForm">
+      <input formControlName="firstName" type="text" placeholder="First name" class="my-3 form-control">
+      <input formControlName="lastName" type="text" placeholder="Last name" class="my-3 form-control">
+      <input formControlName="email" type="text" placeholder="Email" class="my-3 form-control">
+      <input formControlName="password" type="text" placeholder="Password" class="my-3 form-control">
+      <button class="btn btn-primary w-100 my-3" type="submit">Sign up</button>
+    </form>
+  </div>
+</div>

@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 interface User {
   name: string;
@@ -11,20 +12,27 @@ interface User {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
-  name: string;
-  age: number;
-
-  constructor(private http: HttpClient) {}
+  signupForm: FormGroup;
+  constructor(private http: HttpClient, private fb: FormBuilder) {}
 
   getUsers() {
-    this.http.get<User>('http://localhost:3000/users').subscribe(console.log);
+    this.http.get<User>('http://localhost:3000/users')
+    .subscribe(console.log, console.warn);
   }
 
   addUser() {
-    this.http.post<User>('http://localhost:3000/users', {
-      name: this.name, age: +this.age
-    }).subscribe(console.log);
+    this.http.post<User>('http://localhost:3000/users', this.signupForm.value)
+    .subscribe(console.log, console.warn);
+  }
+
+  ngOnInit() {
+    this.signupForm = this.fb.group({
+      firstName: [''],
+      lastName: [''],
+      email: [''],
+      password: [''],
+    });
   }
 }
